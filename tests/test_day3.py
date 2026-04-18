@@ -44,14 +44,20 @@ def _ephemeral_vdb():
 
 class _MockLLM:
     """Offline LLM stub — returns a canned answer instantly."""
-    async def generate(self, prompt: str, system=None) -> str:
+    async def generate(self, prompt: str, system=None, **kwargs) -> str:
         return "This is a test answer based on the provided research context."
 
     async def check_health(self) -> bool:
         return False
 
     async def rewrite_query(self, query: str, memory_context: str = "") -> dict:
-        return {"search_query": query, "rag_query": query, "retrieval_query": query, "answer_question": query}
+        return {"search_query": query, "retrieval_query": query, "answer_question": query}
+
+    async def generate_long_answer(self, query: str, context_chunks: list, memory_context: str = "", max_passes: int = 3) -> str:
+        return "This is a test answer based on the provided research context."
+
+    async def generate_long_report(self, topic: str, context_chunks: list, max_length: int = 800) -> str:
+        return "This is a test report."
 
     def build_rag_prompt(self, query, chunks, memory_context="") -> str:
         return LLMService(settings).build_rag_prompt(query, chunks, memory_context)
