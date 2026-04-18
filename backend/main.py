@@ -248,8 +248,10 @@ async def stats():
                              endpoint_url=s.dynamodb_endpoint_url)
         papers_tbl = ddb.Table("ResearchPapers")
         unique_papers = papers_tbl.scan(Select="COUNT")["Count"]
-        sessions_tbl = ddb.Table("UserSessions")
-        users = sessions_tbl.scan(Select="COUNT")["Count"]
+
+        sessions_tbl = ddb.Table("user_sessions")
+        session_rows = sessions_tbl.scan().get("Items", [])
+        users = len({str(item.get("user_id", "unknown")) for item in session_rows if item.get("user_id")})
     except Exception:
         pass
 
@@ -318,6 +320,73 @@ async def users_list():
     except Exception:
         pass
     return {"users": rows, "total": len(rows)}
+
+
+@app.get("/users/details", tags=["Health"])
+async def users_details():
+    """Return all users with their complete chat session details."""
+    import boto3
+    from backend.config import get_settings
+
+    s = get_settings()
+    detailed = []
+
+    try:
+        ddb = boto3.resource(
+            "dynamodb",
+            region_name=s.aws_region,
+            aws_access_key_id=s.aws_access_key_id,
+            aws_secret_access_key=s.aws_secret_access_key,
+            endpoint_url=s.dynamodb_endpoint_url,
+        )
+        tbl = ddb.Table("user_sessions")
+        resp = tbl.scan()
+        user_map = {}
+
+        for item in resp.get("Items", []):
+            uid = str(item.get("user_id", "unknown"))
+            session_info = {
+                "session_id": str(item.get("session_id", "")),
+                "session_name": str(item.get("session_name", "New Chat")),
+                "message_count": int(item.get("message_count", 0)),
+                "last_message_at": str(item.get("last_message_at", "")),
+                "updated_at": str(item.get("updated_at", "")),
+            }
+
+            if uid not in user_map:
+                user_map[uid] = {
+                    "user_id": uid,
+                    "sessions": [],
+                    "total_sessions": 0,
+                    "total_messages": 0,
+                    "last_active": "",
+                }
+
+            user_map[uid]["sessions"].append(session_info)
+            user_map[uid]["total_sessions"] += 1
+            user_map[uid]["total_messages"] += session_info["message_count"]
+
+            ts = session_info["last_message_at"]
+            if ts > user_map[uid]["last_active"]:
+                user_map[uid]["last_active"] = ts
+
+        for user_row in user_map.values():
+            user_row["sessions"] = sorted(
+                user_row["sessions"],
+                key=lambda x: x.get("last_message_at", ""),
+                reverse=True,
+            )
+            detailed.append(user_row)
+
+        detailed = sorted(detailed, key=lambda x: x.get("last_active", ""), reverse=True)
+    except Exception:
+        pass
+
+    return {
+        "users": detailed,
+        "total_users": len(detailed),
+        "total_sessions": sum(u.get("total_sessions", 0) for u in detailed),
+    }
 
 
 @app.get("/", tags=["Health"])

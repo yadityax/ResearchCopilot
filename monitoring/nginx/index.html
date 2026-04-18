@@ -16,6 +16,9 @@
   .stats-bar { display: flex; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; justify-content: center; }
   .stat { background: #1e1e2e; border: 1px solid #2d2d44; border-radius: 12px;
           padding: 18px 32px; text-align: center; min-width: 150px; }
+  .stat.clickable { cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
+  .stat.clickable:hover { transform: translateY(-3px); border-color: #818cf8; }
+  .stat.clickable:focus { outline: 2px solid #818cf8; outline-offset: 2px; }
   .stat .num { font-size: 2.4rem; font-weight: 700;
                background: linear-gradient(90deg, #818cf8, #38bdf8);
                -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -43,6 +46,8 @@
   td { padding: 10px 16px; font-size: 0.88rem; border-top: 1px solid #2d2d44; }
   tr:hover td { background: #252538; }
   .uid { color: #818cf8; font-weight: 600; }
+  .muted { color: #64748b; font-size: 0.82rem; }
+  .hint { color: #64748b; font-size: 0.8rem; margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -58,7 +63,7 @@
     <div class="num" id="s-chunks">&#8212;</div>
     <div class="lbl">&#x1F9E9; Embedding Chunks</div>
   </div>
-  <div class="stat">
+  <div class="stat clickable" id="users-stat" role="button" tabindex="0" title="Click to load full user details">
     <div class="num" id="s-users">&#8212;</div>
     <div class="lbl">&#x1F465; Users</div>
   </div>
@@ -96,6 +101,7 @@
 </div>
 <div class="section">
   <h2>&#x1F465; Users</h2>
+  <p class="hint">Click the Users stat card above to load complete user/session details.</p>
   <table>
     <thead>
       <tr>
@@ -107,6 +113,24 @@
     </thead>
     <tbody id="users-tbody">
       <tr><td colspan="4" style="color:#475569;text-align:center">Loading&hellip;</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section" id="users-details-section">
+  <h2>&#x1F4CB; User Session Details</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Session ID</th>
+        <th>Session Name</th>
+        <th>Messages</th>
+        <th>Last Active</th>
+      </tr>
+    </thead>
+    <tbody id="users-details-tbody">
+      <tr><td colspan="5" style="color:#475569;text-align:center">Click Users card to load details</td></tr>
     </tbody>
   </table>
 </div>
@@ -141,6 +165,79 @@ fetch("/api/users")
     document.getElementById("users-tbody").innerHTML =
       "<tr><td colspan='4' style='color:#ef4444;text-align:center'>Failed to load</td></tr>";
   });
+
+function formatUtc(ts) {
+  return ts ? ts.replace("T", " ").slice(0, 16) + " UTC" : "--";
+}
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function loadAllUserDetails() {
+  var detailsTbody = document.getElementById("users-details-tbody");
+  detailsTbody.innerHTML = "<tr><td colspan='5' style='color:#475569;text-align:center'>Loading details&hellip;</td></tr>";
+
+  fetch("/api/users/details")
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (!d.users || d.users.length === 0) {
+        detailsTbody.innerHTML = "<tr><td colspan='5' style='color:#475569;text-align:center'>No user details found</td></tr>";
+        return;
+      }
+
+      var rows = [];
+      d.users.forEach(function(userRow) {
+        var sessions = userRow.sessions || [];
+        if (sessions.length === 0) {
+          rows.push(
+            "<tr>" +
+            "<td class='uid'>" + escapeHtml(userRow.user_id) + "</td>" +
+            "<td colspan='4' class='muted'>No sessions</td>" +
+            "</tr>"
+          );
+          return;
+        }
+
+        sessions.forEach(function(s) {
+          rows.push(
+            "<tr>" +
+            "<td class='uid'>" + escapeHtml(userRow.user_id) + "</td>" +
+            "<td>" + escapeHtml(s.session_id) + "</td>" +
+            "<td>" + escapeHtml(s.session_name || "New Chat") + "</td>" +
+            "<td>" + (s.message_count || 0) + "</td>" +
+            "<td class='muted'>" + escapeHtml(formatUtc(s.last_message_at)) + "</td>" +
+            "</tr>"
+          );
+        });
+      });
+
+      detailsTbody.innerHTML = rows.join("");
+      var section = document.getElementById("users-details-section");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    })
+    .catch(function() {
+      detailsTbody.innerHTML = "<tr><td colspan='5' style='color:#ef4444;text-align:center'>Failed to load details</td></tr>";
+    });
+}
+
+var usersStat = document.getElementById("users-stat");
+if (usersStat) {
+  usersStat.addEventListener("click", loadAllUserDetails);
+  usersStat.addEventListener("keydown", function(e) {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      loadAllUserDetails();
+    }
+  });
+}
 </script>
 </body>
 </html>
