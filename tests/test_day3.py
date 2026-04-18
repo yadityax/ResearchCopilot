@@ -51,7 +51,7 @@ class _MockLLM:
         return False
 
     async def rewrite_query(self, query: str, memory_context: str = "") -> dict:
-        return {"search_query": query, "rag_query": query, "retrieval_query": query}
+        return {"search_query": query, "rag_query": query, "retrieval_query": query, "answer_question": query}
 
     def build_rag_prompt(self, query, chunks, memory_context="") -> str:
         return LLMService(settings).build_rag_prompt(query, chunks, memory_context)
