@@ -50,7 +50,7 @@ class _MockLLM:
     async def check_health(self) -> bool:
         return False
 
-    async def rewrite_query(self, query: str) -> dict:
+    async def rewrite_query(self, query: str, memory_context: str = "") -> dict:
         return {"search_query": query, "rag_query": query}
 
     def build_rag_prompt(self, query, chunks, memory_context="") -> str:
