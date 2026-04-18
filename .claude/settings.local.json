@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(pip install:*)",
-      "Bash(curl -sk -H \"ngrok-skip-browser-warning: true\" \"https://oboe-blissful-tableful.ngrok-free.dev/health\")",
-      "Bash(echo \"EXIT: $?\")"
-    ]
-  }
-}
