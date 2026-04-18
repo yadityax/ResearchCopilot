@@ -56,7 +56,7 @@ class _MockLLM:
     async def generate_long_answer(self, query: str, context_chunks: list, memory_context: str = "", max_passes: int = 3) -> str:
         return "This is a test answer based on the provided research context."
 
-    async def generate_long_report(self, topic: str, context_chunks: list, max_length: int = 800) -> str:
+    async def generate_long_report(self, topic: str, context_chunks: list, max_length: int = 800, **kwargs) -> str:
         return "This is a test report."
 
     def build_rag_prompt(self, query, chunks, memory_context="") -> str:
