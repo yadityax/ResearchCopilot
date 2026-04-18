@@ -1,0 +1,19 @@
+cmd: echo "Ingestion runs via FastAPI /api/v1/pipeline/search-and-ingest"
+deps:
+- path: data/papers/
+  hash: md5
+  md5: d751713988987e9331980363e24189ce.dir
+  size: 0
+  nfiles: 0
+params:
+  params.yaml:
+    chunking.chunk_overlap: 64
+    chunking.chunk_size: 512
+    embedding.model: sentence-transformers/all-MiniLM-L6-v2
+    retrieval.top_k: 5
+outs:
+- path: data/embeddings/
+  hash: md5
+  md5: 17ed9b03e868e8933b679fb6314ac513.dir
+  size: 188416
+  nfiles: 1

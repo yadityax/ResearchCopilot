@@ -1,0 +1,14 @@
+stages:
+  ingest:
+    desc: "Track paper ingestion — params control chunking and embedding config"
+    cmd: echo "Ingestion runs via FastAPI /api/v1/pipeline/search-and-ingest"
+    params:
+      - params.yaml:
+          - chunking.chunk_size
+          - chunking.chunk_overlap
+          - embedding.model
+          - retrieval.top_k
+    deps:
+      - data/papers/
+    outs:
+      - data/embeddings/

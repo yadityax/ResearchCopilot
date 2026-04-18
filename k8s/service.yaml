@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: researchcopilot-backend
+  namespace: researchcopilot
+spec:
+  selector:
+    app: researchcopilot-backend
+  type: NodePort
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 30800      # accessible at 10.6.0.69:30800

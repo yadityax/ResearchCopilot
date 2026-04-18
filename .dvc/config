@@ -1,0 +1,5 @@
+[core]
+    no_scm = True
+    remote = local_storage
+['remote "local_storage"']
+    url = /home/aditya/dvc-remote

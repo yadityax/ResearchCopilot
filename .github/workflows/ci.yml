@@ -1,0 +1,41 @@
+name: CI — Lint & Test
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8
+
+      - name: Lint (flake8)
+        run: |
+          flake8 backend/ --max-line-length=120 --ignore=E501,W503 --exclude=__pycache__
+
+      - name: Run tests
+        env:
+          APP_ENV: test
+          CHROMA_HOST: localhost
+          CHROMA_PORT: "8001"
+          OLLAMA_BASE_URL: http://localhost:11434
+          OLLAMA_MODEL: qwen3.5:35b
+          DYNAMODB_ENDPOINT_URL: http://localhost:8002
+          MLFLOW_TRACKING_URI: http://localhost:5000
+        run: |
+          pytest tests/ -x -q --tb=short

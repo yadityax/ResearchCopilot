@@ -1,0 +1,38 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: researchcopilot-hpa
+  namespace: researchcopilot
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: researchcopilot-backend
+  minReplicas: 2             # always at least 2 pods running
+  maxReplicas: 10            # can scale up to 10 pods
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70     # scale up when CPU > 70%
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80     # scale up when RAM > 80%
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 30   # react fast to spikes
+      policies:
+        - type: Pods
+          value: 3                     # add up to 3 pods at a time
+          periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300  # wait 5 min before scaling down
+      policies:
+        - type: Pods
+          value: 1                     # remove 1 pod at a time
+          periodSeconds: 60

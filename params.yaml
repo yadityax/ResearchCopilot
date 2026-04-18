@@ -1,0 +1,21 @@
+embedding:
+  model: sentence-transformers/all-MiniLM-L6-v2
+  dim: 384
+  batch_size: 32
+
+chunking:
+  chunk_size: 512
+  chunk_overlap: 64
+
+llm:
+  model: qwen3.5:35b
+  base_url: http://localhost:11434
+  num_predict: 1024
+
+retrieval:
+  top_k: 5
+  collection: papers
+
+mlflow:
+  experiment: researchcopilot
+  tracking_uri: http://localhost:5000

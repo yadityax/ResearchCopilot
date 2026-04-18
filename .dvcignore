@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs (track structure, not content)
+data/logs/*.log
+
+# MLflow artifacts (tracked separately)
+mlruns/

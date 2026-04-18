@@ -1,0 +1,56 @@
+# ── Web Framework ──────────────────────────────────────────────
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.20
+
+# ── Pydantic / Settings ─────────────────────────────────────────
+pydantic==2.7.1
+pydantic-settings==2.2.1
+python-dotenv==1.0.1
+
+# ── Paper Discovery ─────────────────────────────────────────────
+arxiv==2.1.0
+requests==2.31.0
+httpx==0.27.0
+
+# ── PDF Processing ──────────────────────────────────────────────
+pdfplumber==0.11.0
+pypdf==4.2.0
+PyMuPDF==1.24.5
+
+# ── Embeddings (pretrained sentence-transformers) ───────────────
+sentence-transformers==3.0.1
+torch==2.3.0
+transformers==4.41.2
+numpy==1.26.4
+
+# ── Vector Database ─────────────────────────────────────────────
+chromadb==0.5.0
+
+# ── AWS DynamoDB ────────────────────────────────────────────────
+boto3==1.34.110
+botocore==1.34.110
+
+# ── LLM / Ollama client ─────────────────────────────────────────
+ollama==0.2.1
+
+# ── MLOps / Experiment Tracking ─────────────────────────────────
+mlflow==2.13.0
+prometheus_client>=0.20.0
+dvc>=3.0.0
+
+# ── Frontend ────────────────────────────────────────────────────
+streamlit==1.35.0
+plotly==5.22.0
+
+# ── Utilities ───────────────────────────────────────────────────
+python-jose==3.3.0
+tenacity==8.3.0
+loguru==0.7.2
+tqdm==4.66.4
+aiofiles==23.2.1
+
+# ── Testing ─────────────────────────────────────────────────────
+pytest==8.2.0
+pytest-asyncio==0.23.7
+httpx==0.27.0

@@ -1,0 +1,125 @@
+{
+  "title": "ResearchCopilot — Backend Overview",
+  "uid": "researchcopilot-v1",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "15s",
+  "time": { "from": "now-1h", "to": "now" },
+  "panels": [
+
+    { "type": "row", "title": "API Overview", "id": 100, "gridPos": {"x":0,"y":0,"w":24,"h":1}, "collapsed": false },
+
+    {
+      "id": 1, "title": "Request Rate (req/s)",
+      "type": "timeseries", "gridPos": {"x":0,"y":1,"w":8,"h":7},
+      "targets": [{"expr": "sum(rate(rc_http_requests_total[1m]))", "legendFormat": "req/s", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "reqps", "color": {"mode": "palette-classic"}}}
+    },
+    {
+      "id": 2, "title": "Error Rate (%)",
+      "type": "timeseries", "gridPos": {"x":8,"y":1,"w":8,"h":7},
+      "targets": [{"expr": "100 * sum(rate(rc_http_requests_total{status=~\"4..|5..\"}[1m])) / sum(rate(rc_http_requests_total[1m]))", "legendFormat": "error %", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "percent", "thresholds": {"steps": [{"value":0,"color":"green"},{"value":5,"color":"yellow"},{"value":20,"color":"red"}]}}}
+    },
+    {
+      "id": 3, "title": "HTTP Latency (P50 / P95 / P99)",
+      "type": "timeseries", "gridPos": {"x":16,"y":1,"w":8,"h":7},
+      "targets": [
+        {"expr": "histogram_quantile(0.50, sum(rate(rc_http_request_duration_seconds_bucket[1m])) by (le))", "legendFormat": "p50", "datasource": "Prometheus"},
+        {"expr": "histogram_quantile(0.95, sum(rate(rc_http_request_duration_seconds_bucket[1m])) by (le))", "legendFormat": "p95", "datasource": "Prometheus"},
+        {"expr": "histogram_quantile(0.99, sum(rate(rc_http_request_duration_seconds_bucket[1m])) by (le))", "legendFormat": "p99", "datasource": "Prometheus"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "s"}}
+    },
+
+    { "type": "row", "title": "RAG Pipeline", "id": 101, "gridPos": {"x":0,"y":8,"w":24,"h":1}, "collapsed": false },
+
+    {
+      "id": 10, "title": "RAG Query Rate (req/min)",
+      "type": "timeseries", "gridPos": {"x":0,"y":9,"w":6,"h":7},
+      "targets": [{"expr": "sum(rate(rc_rag_queries_total[1m])) * 60", "legendFormat": "queries/min", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "short"}}
+    },
+    {
+      "id": 11, "title": "RAG End-to-End Duration",
+      "type": "timeseries", "gridPos": {"x":6,"y":9,"w":9,"h":7},
+      "targets": [
+        {"expr": "histogram_quantile(0.50, sum(rate(rc_rag_query_duration_seconds_bucket[5m])) by (le))", "legendFormat": "p50", "datasource": "Prometheus"},
+        {"expr": "histogram_quantile(0.95, sum(rate(rc_rag_query_duration_seconds_bucket[5m])) by (le))", "legendFormat": "p95", "datasource": "Prometheus"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "s"}}
+    },
+    {
+      "id": 12, "title": "Retrieval vs Generation Time (p50)",
+      "type": "timeseries", "gridPos": {"x":15,"y":9,"w":9,"h":7},
+      "targets": [
+        {"expr": "histogram_quantile(0.50, sum(rate(rc_rag_retrieval_duration_seconds_bucket[5m])) by (le))", "legendFormat": "retrieval p50", "datasource": "Prometheus"},
+        {"expr": "histogram_quantile(0.50, sum(rate(rc_rag_generation_duration_seconds_bucket[5m])) by (le))", "legendFormat": "generation p50", "datasource": "Prometheus"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "s"}}
+    },
+
+    { "type": "row", "title": "GPU Monitoring", "id": 102, "gridPos": {"x":0,"y":16,"w":24,"h":1}, "collapsed": false },
+
+    {
+      "id": 20, "title": "GPU Memory Used (MB)",
+      "type": "timeseries", "gridPos": {"x":0,"y":17,"w":8,"h":7},
+      "targets": [{"expr": "rc_gpu_memory_used_mb", "legendFormat": "GPU {{gpu_id}} {{gpu_name}}", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "decmbytes"}}
+    },
+    {
+      "id": 21, "title": "GPU Utilization (%)",
+      "type": "timeseries", "gridPos": {"x":8,"y":17,"w":8,"h":7},
+      "targets": [{"expr": "rc_gpu_utilization_pct", "legendFormat": "GPU {{gpu_id}}", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "percent", "max": 100}}
+    },
+    {
+      "id": 22, "title": "GPU Temperature (°C)",
+      "type": "timeseries", "gridPos": {"x":16,"y":17,"w":8,"h":7},
+      "targets": [{"expr": "rc_gpu_temperature_c", "legendFormat": "GPU {{gpu_id}}", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "celsius", "thresholds": {"steps": [{"value":0,"color":"green"},{"value":70,"color":"yellow"},{"value":85,"color":"red"}]}}}
+    },
+
+    { "type": "row", "title": "System Resources", "id": 103, "gridPos": {"x":0,"y":24,"w":24,"h":1}, "collapsed": false },
+
+    {
+      "id": 30, "title": "CPU Usage (%)",
+      "type": "gauge", "gridPos": {"x":0,"y":25,"w":6,"h":7},
+      "targets": [{"expr": "rc_system_cpu_pct", "legendFormat": "CPU", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "percent", "min": 0, "max": 100, "thresholds": {"steps": [{"value":0,"color":"green"},{"value":70,"color":"yellow"},{"value":90,"color":"red"}]}}}
+    },
+    {
+      "id": 31, "title": "RAM Usage (%)",
+      "type": "gauge", "gridPos": {"x":6,"y":25,"w":6,"h":7},
+      "targets": [{"expr": "rc_system_ram_pct", "legendFormat": "RAM", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "percent", "min": 0, "max": 100, "thresholds": {"steps": [{"value":0,"color":"green"},{"value":75,"color":"yellow"},{"value":90,"color":"red"}]}}}
+    },
+    {
+      "id": 32, "title": "GPU Power Draw (W)",
+      "type": "timeseries", "gridPos": {"x":12,"y":25,"w":12,"h":7},
+      "targets": [{"expr": "rc_gpu_power_w", "legendFormat": "GPU {{gpu_id}}", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "watt"}}
+    },
+
+    { "type": "row", "title": "Paper Ingestion", "id": 104, "gridPos": {"x":0,"y":32,"w":24,"h":1}, "collapsed": false },
+
+    {
+      "id": 40, "title": "Ingest Rate by Status",
+      "type": "timeseries", "gridPos": {"x":0,"y":33,"w":12,"h":7},
+      "targets": [{"expr": "sum by (status) (rate(rc_paper_ingests_total[5m])) * 60", "legendFormat": "{{status}}", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "short"}}
+    },
+    {
+      "id": 41, "title": "Chunks Created (total)",
+      "type": "stat", "gridPos": {"x":12,"y":33,"w":6,"h":7},
+      "targets": [{"expr": "rc_paper_chunks_total", "legendFormat": "chunks", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "short"}}
+    },
+    {
+      "id": 42, "title": "Total Papers Ingested",
+      "type": "stat", "gridPos": {"x":18,"y":33,"w":6,"h":7},
+      "targets": [{"expr": "rc_paper_ingests_total{status='success'}", "legendFormat": "papers", "datasource": "Prometheus"}],
+      "fieldConfig": {"defaults": {"unit": "short"}}
+    }
+  ]
+}
