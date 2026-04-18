@@ -13,7 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy backend code
 COPY backend/ ./backend/
-COPY .env .env
 
 # Create data dirs
 RUN mkdir -p data/logs data/papers data/embeddings
