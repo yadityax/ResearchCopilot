@@ -202,7 +202,7 @@ SEARCH:"""
         prompt = self.build_rag_prompt(query, context_chunks, memory_context)
         answer = await self.generate(prompt, num_predict=1024)
 
-        if not answer or answer in self._fallback_response(""):
+        if not answer or answer == self._fallback_response(""):
             return answer
 
         # Continuation passes
@@ -317,6 +317,8 @@ Report:"""
         if not report:
             return report
 
+        passes_used = 1
+
         for pass_num in range(2, max_passes + 1):
             if self._is_complete(report):
                 logger.debug(f"[LLMService] report complete after pass {pass_num - 1}")
@@ -352,8 +354,9 @@ Continue the report:"""
                 break
 
             report = report.rstrip() + "\n\n" + continuation.strip()
+            passes_used = pass_num
 
-        logger.info(f"[LLMService] final report: {len(report.split())} words over {pass_num - 1} passes")
+        logger.info(f"[LLMService] final report: {len(report.split())} words over {passes_used} passes")
         return report
 
     # ── Helpers ─────────────────────────────────────────────────────────────
