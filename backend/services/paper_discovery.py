@@ -160,7 +160,7 @@ class PaperDiscoveryService:
                     title=item.get("title", "Untitled"),
                     authors=[a.get("name", "") for a in item.get("authors", [])],
                     abstract=item.get("abstract") or "",
-                    published_date=str(item["year"]) if item.get("year") else None,
+                    published_date=str(item.get("year")) if item.get("year") else None,
                     url=f"https://www.semanticscholar.org/paper/{ss_id}",
                     pdf_url=pdf_url,
                     source="semantic_scholar",

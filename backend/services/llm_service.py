@@ -158,6 +158,17 @@ SEARCH:"""
             if retrieval_query == raw_query and search_query != raw_query:
                 retrieval_query = search_query
 
+            missing = [
+                field for field, val in [
+                    ("SEARCH", search_query), ("RETRIEVE", retrieval_query), ("QUESTION", answer_question)
+                ] if val == raw_query
+            ]
+            if missing:
+                logger.warning(
+                    f"[LLMService] rewrite_query: LLM output missing fields {missing}, "
+                    f"falling back to raw query for those fields.\nRaw LLM output: {raw!r}"
+                )
+
             logger.info(
                 f"[LLMService] rewrite_query: '{raw_query}'\n"
                 f"  search='{search_query}'\n"
