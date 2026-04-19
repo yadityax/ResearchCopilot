@@ -202,7 +202,7 @@ SEARCH:"""
         prompt = self.build_rag_prompt(query, context_chunks, memory_context)
         answer = await self.generate(prompt, num_predict=1024)
 
-        if not answer or answer in self._fallback_response(""):
+        if not answer or answer == self._fallback_response(""):
             return answer
 
         # Continuation passes
