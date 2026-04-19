@@ -78,6 +78,7 @@ class RetrievedChunk(BaseModel):
     text: str
     score: float
     chunk_index: int
+    metadata: Dict[str, Any] = Field(default_factory=dict)
 
 
 class EmbeddingQueryResponse(BaseModel):

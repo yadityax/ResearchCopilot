@@ -65,7 +65,7 @@ class MemoryService:
                 metadata={
                     "session_id": request.session_id,
                     "role": request.role,
-                    "paper_title": request.role,
+                    "paper_title": "",
                     "entry_id": entry_id,
                     "stored_at": now_iso,
                     **(request.metadata or {}),
@@ -155,7 +155,7 @@ class MemoryService:
                 MemoryEntry(
                     entry_id=chunk.chunk_id,
                     session_id=request.session_id,
-                    role=chunk.paper_title if chunk.paper_title in ("user", "assistant") else "assistant",
+                    role=chunk.metadata.get("role", "assistant"),
                     content=chunk.text,
                     timestamp="",
                     metadata={"score": chunk.score, "interest_score": round(decayed_score, 4)},

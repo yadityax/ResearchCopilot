@@ -129,12 +129,13 @@ class VectorDBService:
             score = round(1.0 - dist, 4)
             chunks.append(
                 RetrievedChunk(
-                    chunk_id=chunk_id,                        # use the stored id directly
+                    chunk_id=chunk_id,
                     paper_id=meta.get("paper_id", ""),
-                    paper_title=meta.get("paper_title", ""),  # stored in metadata
+                    paper_title=meta.get("paper_title", ""),
                     text=doc,
                     score=score,
                     chunk_index=meta.get("chunk_index", 0),
+                    metadata=meta,
                 )
             )
 
