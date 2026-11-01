@@ -284,6 +284,12 @@ def test_embedding_query_via_service():
     """
     emb_svc = EmbeddingService(settings)
     vdb = _ephemeral_vdb()
+    # EphemeralClient state is shared across the process; start from an empty collection
+    # so chunks stored by other tests cannot outrank this one.
+    try:
+        vdb._client.delete_collection(settings.chroma_collection_papers)
+    except Exception:
+        pass
 
     # Pre-populate
     text = "Self-attention is the core of transformers."

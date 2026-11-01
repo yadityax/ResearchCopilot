@@ -62,17 +62,18 @@ class RAGService:
         retrieval_query = rewritten["retrieval_query"]
         answer_question = rewritten["answer_question"]
         paper_name = rewritten.get("paper_name")
+        paper_title = rewritten.get("paper_title")
 
         # 2b. Auto-ingest: if a specific paper is detected but not in DB, fetch & ingest it
         if paper_name:
-            existing = await self._dynamo.scan_papers_by_keyword(paper_name)
+            existing = await self._dynamo.find_papers(paper_name, paper_title)
             if not existing:
                 logger.info(f"[RAGService] '{paper_name}' not in DB — auto-ingesting...")
                 try:
                     from backend.services.ingest_pipeline import IngestPipeline
                     pipeline = IngestPipeline(self.settings)
                     await pipeline.search_and_ingest(
-                        query=rewritten["search_query"],
+                        query=paper_title or rewritten["search_query"],
                         max_papers=3,
                     )
                     logger.info(f"[RAGService] auto-ingest complete for '{paper_name}'")
@@ -87,6 +88,7 @@ class RAGService:
         chunks = await self._hybrid_retrieve(
             query_embedding=query_embedding,
             paper_name=paper_name,
+            paper_title=paper_title,
             top_k=max(request.top_k, 8),
             filter_paper_ids=request.paper_ids,
         )
@@ -150,6 +152,7 @@ class RAGService:
         paper_name: Optional[str],
         top_k: int,
         filter_paper_ids: Optional[List[str]],
+        paper_title: Optional[str] = None,
     ) -> List[RetrievedChunk]:
         """
         If a specific paper is detected in the query, do TWO searches:
@@ -169,8 +172,8 @@ class RAGService:
         if not paper_name:
             return general
 
-        # Look up the paper in DynamoDB by keyword match on title
-        matched = await self._dynamo.scan_papers_by_keyword(paper_name)
+        # Look up the paper in DynamoDB by official title, falling back to the short name
+        matched = await self._dynamo.find_papers(paper_name, paper_title)
         if not matched:
             logger.debug(f"[RAGService] no paper found for name='{paper_name}', using general only")
             return general
