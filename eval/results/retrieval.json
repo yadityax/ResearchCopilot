@@ -1,0 +1,1368 @@
+{
+  "summary": [
+    {
+      "chunks": "2048 chars",
+      "embedding": "MiniLM",
+      "query": "raw",
+      "recall@5": 0.344,
+      "recall@10": 0.469,
+      "paper_hit@5": 0.906,
+      "mrr@10": 0.248
+    },
+    {
+      "chunks": "2048 chars",
+      "embedding": "MiniLM + untrained MLP (5 seeds)",
+      "query": "raw",
+      "recall@5": 0.375,
+      "recall@10": 0.512,
+      "paper_hit@5": 0.925,
+      "mrr@10": 0.222,
+      "recall@5_range": [
+        0.344,
+        0.406
+      ]
+    },
+    {
+      "chunks": "2048 chars",
+      "embedding": "MiniLM",
+      "query": "rewritten",
+      "recall@5": 0.656,
+      "recall@10": 0.719,
+      "paper_hit@5": 0.938,
+      "mrr@10": 0.485
+    },
+    {
+      "chunks": "2048 chars",
+      "embedding": "MiniLM + untrained MLP (5 seeds)",
+      "query": "rewritten",
+      "recall@5": 0.588,
+      "recall@10": 0.694,
+      "paper_hit@5": 0.956,
+      "mrr@10": 0.447,
+      "recall@5_range": [
+        0.531,
+        0.688
+      ]
+    },
+    {
+      "chunks": "2048 chars",
+      "embedding": "MiniLM",
+      "query": "paper_scoped",
+      "recall@5": 0.688,
+      "recall@10": 0.719,
+      "paper_hit@5": 0.969,
+      "mrr@10": 0.509
+    },
+    {
+      "chunks": "2048 chars",
+      "embedding": "MiniLM + untrained MLP (5 seeds)",
+      "query": "paper_scoped",
+      "recall@5": 0.625,
+      "recall@10": 0.706,
+      "paper_hit@5": 0.969,
+      "mrr@10": 0.474,
+      "recall@5_range": [
+        0.594,
+        0.719
+      ]
+    },
+    {
+      "chunks": "1024 chars",
+      "embedding": "MiniLM",
+      "query": "raw",
+      "recall@5": 0.312,
+      "recall@10": 0.562,
+      "paper_hit@5": 0.938,
+      "mrr@10": 0.19
+    },
+    {
+      "chunks": "1024 chars",
+      "embedding": "MiniLM + untrained MLP (5 seeds)",
+      "query": "raw",
+      "recall@5": 0.338,
+      "recall@10": 0.5,
+      "paper_hit@5": 0.938,
+      "mrr@10": 0.196,
+      "recall@5_range": [
+        0.25,
+        0.406
+      ]
+    },
+    {
+      "chunks": "1024 chars",
+      "embedding": "MiniLM",
+      "query": "rewritten",
+      "recall@5": 0.75,
+      "recall@10": 0.875,
+      "paper_hit@5": 1.0,
+      "mrr@10": 0.451
+    },
+    {
+      "chunks": "1024 chars",
+      "embedding": "MiniLM + untrained MLP (5 seeds)",
+      "query": "rewritten",
+      "recall@5": 0.688,
+      "recall@10": 0.812,
+      "paper_hit@5": 0.994,
+      "mrr@10": 0.458,
+      "recall@5_range": [
+        0.594,
+        0.781
+      ]
+    },
+    {
+      "chunks": "1024 chars",
+      "embedding": "MiniLM",
+      "query": "paper_scoped",
+      "recall@5": 0.781,
+      "recall@10": 0.875,
+      "paper_hit@5": 1.0,
+      "mrr@10": 0.477
+    },
+    {
+      "chunks": "1024 chars",
+      "embedding": "MiniLM + untrained MLP (5 seeds)",
+      "query": "paper_scoped",
+      "recall@5": 0.713,
+      "recall@10": 0.831,
+      "paper_hit@5": 1.0,
+      "mrr@10": 0.479,
+      "recall@5_range": [
+        0.625,
+        0.844
+      ]
+    }
+  ],
+  "chunk_stats": {
+    "2048 chars": {
+      "chunks": 460,
+      "median_tokens": 455,
+      "pct_chunks_truncated": 98.9,
+      "pct_tokens_never_embedded": 45.3
+    },
+    "1024 chars": {
+      "chunks": 884,
+      "median_tokens": 232,
+      "pct_chunks_truncated": 27.4,
+      "pct_tokens_never_embedded": 5.5
+    }
+  },
+  "per_question": {
+    "q01": {
+      "2048 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      }
+    },
+    "q02": {
+      "2048 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      }
+    },
+    "q03": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": false,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": false,
+        "mrr@10": 0.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": false,
+        "mrr@10": 0.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.16666666666666666
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      }
+    },
+    "q04": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      }
+    },
+    "q05": {
+      "2048 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      }
+    },
+    "q06": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      }
+    },
+    "q07": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.1111111111111111
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.2
+      }
+    },
+    "q08": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      }
+    },
+    "q09": {
+      "2048 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      }
+    },
+    "q10": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.125
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.125
+      }
+    },
+    "q11": {
+      "2048 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.14285714285714285
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      }
+    },
+    "q12": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.125
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.2
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.2
+      },
+      "1024 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.2
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.2
+      }
+    },
+    "q13": {
+      "2048 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      }
+    },
+    "q14": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": false,
+        "mrr@10": 0.1111111111111111
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.16666666666666666
+      },
+      "1024 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      }
+    },
+    "q15": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "1024 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.14285714285714285
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.16666666666666666
+      }
+    },
+    "q16": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": false,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": false,
+        "mrr@10": 0.1
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.2
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      }
+    },
+    "q17": {
+      "2048 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "2048 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      }
+    },
+    "q18": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.2
+      },
+      "1024 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.125
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.125
+      }
+    },
+    "q19": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.1
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      }
+    },
+    "q20": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.1
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.125
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.14285714285714285
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      }
+    },
+    "q21": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.1111111111111111
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      }
+    },
+    "q22": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      }
+    },
+    "q23": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.16666666666666666
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      }
+    },
+    "q24": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.2
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.2
+      }
+    },
+    "q25": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.125
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": false,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      }
+    },
+    "q26": {
+      "2048 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      }
+    },
+    "q27": {
+      "2048 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      }
+    },
+    "q28": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.16666666666666666
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      }
+    },
+    "q29": {
+      "2048 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.2
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.2
+      },
+      "1024 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.3333333333333333
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.5
+      }
+    },
+    "q30": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|rewritten": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": true,
+        "mrr@10": 0.0
+      }
+    },
+    "q31": {
+      "2048 chars|raw": {
+        "recall@5": false,
+        "recall@10": false,
+        "paper_hit@5": false,
+        "mrr@10": 0.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": false,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.14285714285714285
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      }
+    },
+    "q32": {
+      "2048 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "2048 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 1.0
+      },
+      "1024 chars|raw": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      },
+      "1024 chars|rewritten": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      },
+      "1024 chars|paper_scoped": {
+        "recall@5": true,
+        "recall@10": true,
+        "paper_hit@5": true,
+        "mrr@10": 0.25
+      }
+    }
+  }
+}

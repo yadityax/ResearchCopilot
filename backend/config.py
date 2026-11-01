@@ -41,8 +41,8 @@ class Settings(BaseSettings):
     # Embeddings
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     embedding_dim: int = 384
-    chunk_size: int = 512
-    chunk_overlap: int = 64
+    chunk_size: int = 256      # ~1024 chars; MiniLM reads at most 256 word pieces (see eval/results/report.md)
+    chunk_overlap: int = 32
 
     # Semantic Scholar
     semantic_scholar_api_key: str = ""

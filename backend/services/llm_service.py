@@ -64,17 +64,20 @@ class LLMService:
 
     async def rewrite_query(self, raw_query: str, memory_context: str = "") -> dict:
         """
-        Takes the user's raw query and returns THREE distinct forms:
+        Takes the user's raw query and returns:
           - search_query:    broad keywords for arXiv paper discovery
           - retrieval_query: content-specific terms to hit the right ChromaDB chunks
                              (describes WHAT the answer looks like, not just the topic)
           - answer_question: a well-formed question for the LLM RAG prompt
+          - paper_name:      short name of a specific paper the user refers to (or None)
+          - paper_title:     that paper's official title, used to look it up in the DB (or None)
         """
-        prompt = f"""You are a research query assistant. Given the user's raw input, output FOUR lines exactly:
+        prompt = f"""You are a research query assistant. Given the user's raw input, output FIVE lines exactly:
 SEARCH: <3-8 broad keywords for arXiv paper search>
 RETRIEVE: <specific mathematical/technical terms that would appear INSIDE the relevant paper sections>
 QUESTION: <a clear, complete, well-formed research question>
 PAPER: <ONLY a well-known published paper acronym/name if the user explicitly refers to a specific paper (e.g. "BERT paper", "LoRA paper", "DDPM paper"). Use NONE for general topic questions.>
+TITLE: <the official published title of that paper, or NONE if PAPER is NONE>
 
 Rules for PAPER field:
 - "lora paper equations" → PAPER: LoRA
@@ -83,7 +86,7 @@ Rules for PAPER field:
 - "how does attention work" → PAPER: NONE  (general topic, not a specific paper)
 - "explain diffusion models" → PAPER: DDPM  (DDPM is the canonical diffusion paper)
 - "resnet architecture" → PAPER: ResNet
-- Never invent paper names. If unsure, use NONE.
+- Never invent paper names or titles. If unsure, use NONE for both.
 
 Examples:
 Raw: "berts all equation"
@@ -91,30 +94,35 @@ SEARCH: BERT pre-training deep bidirectional transformers
 RETRIEVE: BERT attention formula softmax QKV matrix layer normalization feed-forward equation
 QUESTION: What are all the mathematical equations used in the BERT model?
 PAPER: BERT
+TITLE: BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding
 
 Raw: "explain lora paper equations"
 SEARCH: LoRA low-rank adaptation large language models Hu 2021
 RETRIEVE: LoRA W0 BA low-rank decomposition delta W weight update rank r scaling alpha pretrained weights frozen
 QUESTION: What are all the mathematical equations in the original LoRA paper, including weight update, rank decomposition, and scaling factor?
 PAPER: LoRA
+TITLE: LoRA: Low-Rank Adaptation of Large Language Models
 
 Raw: "explain the diffusion papers loss function"
 SEARCH: DDPM denoising diffusion probabilistic models loss function Ho 2020
 RETRIEVE: DDPM loss function variational lower bound noise prediction epsilon simple objective L_simple L_vlb forward process reverse process
 QUESTION: What is the loss function in the DDPM diffusion paper, including the variational lower bound, simplified objective, and noise prediction?
 PAPER: DDPM
+TITLE: Denoising Diffusion Probabilistic Models
 
 Raw: "how does gpt work"
 SEARCH: GPT language model transformer autoregressive generation
 RETRIEVE: GPT transformer decoder autoregressive next token prediction causal attention language model
 QUESTION: How does GPT work including its architecture, attention, and training objective?
 PAPER: NONE
+TITLE: NONE
 
 Raw: "explain cross attention"
 SEARCH: cross-attention mechanism transformer encoder decoder
 RETRIEVE: cross-attention query key value encoder decoder attention weight softmax scaled dot product
 QUESTION: What is cross-attention in transformers and how does it differ from self-attention?
 PAPER: NONE
+TITLE: NONE
 
 Context rule: If the raw query is short or ambiguous (e.g. "give equation", "explain more", "what about loss?"),
 use the conversation history below to infer what topic the user is referring to, and expand the query accordingly.
@@ -135,6 +143,7 @@ SEARCH:"""
             retrieval_query = raw_query
             answer_question = raw_query
             paper_name = None
+            paper_title = None
 
             for line in lines:
                 line = line.strip()
@@ -154,6 +163,10 @@ SEARCH:"""
                     val = line[6:].strip()
                     if val and val.upper() != "NONE":
                         paper_name = val
+                elif line.upper().startswith("TITLE:"):
+                    val = line[6:].strip()
+                    if val and val.upper() != "NONE":
+                        paper_title = val
 
             if retrieval_query == raw_query and search_query != raw_query:
                 retrieval_query = search_query
@@ -174,13 +187,14 @@ SEARCH:"""
                 f"  search='{search_query}'\n"
                 f"  retrieve='{retrieval_query}'\n"
                 f"  question='{answer_question}'\n"
-                f"  paper='{paper_name}'"
+                f"  paper='{paper_name}' title='{paper_title}'"
             )
             return {
                 "search_query": search_query,
                 "retrieval_query": retrieval_query,
                 "answer_question": answer_question,
                 "paper_name": paper_name,
+                "paper_title": paper_title if paper_name else None,
             }
 
         except Exception as e:
@@ -190,6 +204,7 @@ SEARCH:"""
                 "retrieval_query": raw_query,
                 "answer_question": raw_query,
                 "paper_name": None,
+                "paper_title": None,
             }
 
     # ── Multi-pass Long Answer ──────────────────────────────────────────────

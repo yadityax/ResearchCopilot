@@ -1,0 +1,226 @@
+{
+  "why divide by root dk in attention": {
+    "search_query": "scaled dot-product attention transformer mechanism scaling factor",
+    "retrieval_query": "scaled dot-product attention sqrt(d_k) variance gradient vanishing softmax saturation dot product magnitude",
+    "answer_question": "Why is the dot product in the attention mechanism divided by the square root of the key dimension ($d_k$)?",
+    "paper_name": null,
+    "paper_title": null
+  },
+  "how many heads in transformer base": {
+    "search_query": "transformer base model architecture hyperparameters attention heads",
+    "retrieval_query": "transformer base d_model 768 n_heads 12 multi-head attention configuration",
+    "answer_question": "How many attention heads are used in the standard Transformer base model?",
+    "paper_name": null,
+    "paper_title": null
+  },
+  "transformer positional encoding formula": {
+    "search_query": "transformer positional encoding sinusoidal formula attention",
+    "retrieval_query": "positional encoding PE sin cos absolute position sine wave frequency dimension index",
+    "answer_question": "What is the mathematical formula for sinusoidal positional encoding in the Transformer model?",
+    "paper_name": null,
+    "paper_title": null
+  },
+  "learning rate schedule attention is all you need": {
+    "search_query": "Transformer attention mechanism learning rate schedule warmup inverse square root",
+    "retrieval_query": "learning rate schedule warmup steps inverse square root decay formula 0.5 d_model^0.5",
+    "answer_question": "What is the specific learning rate schedule used in the \"Attention Is All You Need\" paper, including the warmup steps and the inverse square root decay formula?",
+    "paper_name": "Transformer",
+    "paper_title": "Attention Is All You Need"
+  },
+  "bert masking strategy": {
+    "search_query": "BERT pre-training masked language model masking strategy",
+    "retrieval_query": "masked language model MLM 15% tokens [MASK] token replacement random word original token",
+    "answer_question": "What is the masking strategy used in the BERT pre-training process?",
+    "paper_name": "BERT",
+    "paper_title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
+  },
+  "what is NSP in bert": {
+    "search_query": "BERT next sentence prediction task pre-training objective",
+    "retrieval_query": "NSP next sentence prediction binary classification task [SEP] token positive negative pairs pre-training objective",
+    "answer_question": "What is the Next Sentence Prediction (NSP) task in the BERT model and how is it used during pre-training?",
+    "paper_name": "BERT",
+    "paper_title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
+  },
+  "bert pretraining data": {
+    "search_query": "BERT pre-training data corpus BookCorpus Wikipedia",
+    "retrieval_query": "pre-training corpus BookCorpus Wikipedia 800 million words 2.5 billion words next sentence prediction masked language model",
+    "answer_question": "What specific datasets and corpora are used for the pre-training of the BERT model?",
+    "paper_name": "BERT",
+    "paper_title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
+  },
+  "lora weight update equation": {
+    "search_query": "LoRA low-rank adaptation large language models weight update",
+    "retrieval_query": "LoRA weight update equation W0 BA delta W low-rank decomposition rank r scaling alpha",
+    "answer_question": "What is the weight update equation in the LoRA paper, specifically how the low-rank matrices A and B modify the frozen weights?",
+    "paper_name": "LoRA",
+    "paper_title": "LoRA: Low-Rank Adaptation of Large Language Models"
+  },
+  "how are lora matrices initialized": {
+    "search_query": "LoRA low-rank adaptation initialization matrix A B Gaussian",
+    "retrieval_query": "LoRA initialization Kaiming uniform distribution Gaussian distribution matrix A matrix B zero initialization rank r",
+    "answer_question": "How are the low-rank matrices A and B initialized in the LoRA method?",
+    "paper_name": "LoRA",
+    "paper_title": "LoRA: Low-Rank Adaptation of Large Language Models"
+  },
+  "lora parameter reduction vs gpt3 full finetuning": {
+    "search_query": "LoRA low-rank adaptation parameter efficiency GPT-3 full fine-tuning comparison",
+    "retrieval_query": "LoRA trainable parameters rank r scaling alpha GPT-3 175B parameters full fine-tuning memory footprint parameter count reduction",
+    "answer_question": "How does the parameter reduction of LoRA compare to full fine-tuning of GPT-3?",
+    "paper_name": "LoRA",
+    "paper_title": "LoRA: Low-Rank Adaptation of Large Language Models"
+  },
+  "which attention weights does lora adapt": {
+    "search_query": "LoRA low-rank adaptation attention mechanism large language models",
+    "retrieval_query": "LoRA attention weights Q K V projection matrices low-rank decomposition delta W rank r",
+    "answer_question": "Which specific attention weight matrices (Query, Key, Value, or Output) does the LoRA method adapt?",
+    "paper_name": "LoRA",
+    "paper_title": "LoRA: Low-Rank Adaptation of Large Language Models"
+  },
+  "does lora add inference latency": {
+    "search_query": "LoRA low-rank adaptation inference latency overhead efficiency",
+    "retrieval_query": "LoRA inference overhead matrix multiplication cost rank r merging weights A B matrix runtime latency",
+    "answer_question": "Does LoRA add inference latency compared to the base model, and how is the overhead managed?",
+    "paper_name": "LoRA",
+    "paper_title": "LoRA: Low-Rank Adaptation of Large Language Models"
+  },
+  "ddpm simplified loss": {
+    "search_query": "DDPM denoising diffusion probabilistic models simplified loss function Ho 2020",
+    "retrieval_query": "DDPM simplified objective L_simple noise prediction epsilon variational lower bound L_vlb forward process reverse process",
+    "answer_question": "What is the simplified loss function in the DDPM paper, and how does it relate to the variational lower bound?",
+    "paper_name": "DDPM",
+    "paper_title": "Denoising Diffusion Probabilistic Models"
+  },
+  "ddpm noise schedule values": {
+    "search_query": "DDPM denoising diffusion probabilistic models noise schedule beta",
+    "retrieval_query": "beta_t linear schedule cosine schedule alpha_bar_t cumulative product noise variance sigma_t",
+    "answer_question": "What are the specific values and schedules for the noise parameters (beta_t) in the DDPM paper?",
+    "paper_name": "DDPM",
+    "paper_title": "Denoising Diffusion Probabilistic Models"
+  },
+  "ddpm fid on cifar10": {
+    "search_query": "DDPM denoising diffusion probabilistic models CIFAR-10 FID evaluation",
+    "retrieval_query": "FID Frechet Inception Distance CIFAR-10 32x32 1024 samples evaluation metric DDPM results",
+    "answer_question": "What is the FID score achieved by the DDPM model on the CIFAR-10 dataset?",
+    "paper_name": "DDPM",
+    "paper_title": "Denoising Diffusion Probabilistic Models"
+  },
+  "ddpm training algorithm steps": {
+    "search_query": "DDPM denoising diffusion probabilistic models training algorithm Ho 2020",
+    "retrieval_query": "DDPM training algorithm forward process reverse process noise prediction epsilon simple objective L_simple sampling procedure",
+    "answer_question": "What are the specific steps of the training algorithm in the DDPM paper, including the forward and reverse processes and the simplified loss objective?",
+    "paper_name": "DDPM",
+    "paper_title": "Denoising Diffusion Probabilistic Models"
+  },
+  "what is a residual block": {
+    "search_query": "residual block deep learning skip connection ResNet",
+    "retrieval_query": "residual block skip connection identity mapping shortcut connection gradient flow vanishing gradient",
+    "answer_question": "What is a residual block in deep learning and how does it function?",
+    "paper_name": null,
+    "paper_title": null
+  },
+  "degradation problem resnet": {
+    "search_query": "ResNet degradation problem deep neural networks skip connections",
+    "retrieval_query": "degradation problem identity mapping shortcut connections residual learning block depth accuracy saturation",
+    "answer_question": "What is the degradation problem in ResNet and how do shortcut connections solve it?",
+    "paper_name": "ResNet",
+    "paper_title": "Deep Residual Learning for Image Recognition"
+  },
+  "resnet imagenet error": {
+    "search_query": "ResNet deep residual learning ImageNet classification error rate",
+    "retrieval_query": "ResNet residual block shortcut connection top-5 error ImageNet validation set accuracy depth",
+    "answer_question": "What is the top-5 error rate of ResNet on the ImageNet dataset?",
+    "paper_name": "ResNet",
+    "paper_title": "Deep Residual Learning for Image Recognition"
+  },
+  "bottleneck design resnet 50": {
+    "search_query": "ResNet-50 bottleneck design residual block architecture",
+    "retrieval_query": "bottleneck block 1x1 convolution 3x3 convolution expansion reduction channel dimension residual connection skip connection",
+    "answer_question": "What is the bottleneck design in ResNet-50 and how does it function within the residual blocks?",
+    "paper_name": "ResNet",
+    "paper_title": "Deep Residual Learning for Image Recognition"
+  },
+  "difference between rag sequence and rag token": {
+    "search_query": "RAG retrieval augmented generation sequence retrieval token retrieval",
+    "retrieval_query": "RAG-Sequence RAG-Token joint likelihood marginal likelihood conditional likelihood document retrieval generation",
+    "answer_question": "What is the difference between RAG-Sequence and RAG-Token in terms of their training objectives and likelihood calculations?",
+    "paper_name": "RAG",
+    "paper_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+  },
+  "what retriever does the rag paper use": {
+    "search_query": "RAG retrieval augmented generation neural retrieval dense vector search",
+    "retrieval_query": "DPR dense passage retriever FAISS top-k retrieval document chunks knowledge base",
+    "answer_question": "What specific retriever model does the original RAG paper use for retrieving relevant documents?",
+    "paper_name": "RAG",
+    "paper_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+  },
+  "rag generator model": {
+    "search_query": "RAG retrieval augmented generation generator model architecture",
+    "retrieval_query": "RAG-Sequence RAG-Token generator model cross-attention retrieved passages context encoder decoder",
+    "answer_question": "What is the architecture and mechanism of the generator model in the RAG (Retrieval-Augmented Generation) framework?",
+    "paper_name": "RAG",
+    "paper_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+  },
+  "rag knowledge source size": {
+    "search_query": "Retrieval-Augmented Generation knowledge base size retrieval corpus",
+    "retrieval_query": "retrieval-augmented generation context window document chunking retrieval corpus size knowledge base",
+    "answer_question": "How does the size of the knowledge source or retrieval corpus affect the performance of Retrieval-Augmented Generation systems?",
+    "paper_name": null,
+    "paper_title": null
+  },
+  "gan objective function": {
+    "search_query": "GAN generative adversarial networks objective function minimax",
+    "retrieval_query": "GAN minimax game value function V D G discriminator generator expectation log D(x) log(1-D(G(z))) Nash equilibrium",
+    "answer_question": "What is the objective function of a Generative Adversarial Network (GAN)?",
+    "paper_name": "GAN",
+    "paper_title": "Generative Adversarial Nets"
+  },
+  "why does generator maximize log D(G(z)) instead": {
+    "search_query": "GAN generator objective maximize log D(G(z)) minimax game",
+    "retrieval_query": "GAN generator objective maximize log D(G(z)) minimax game Jensen-Shannon divergence KL divergence mode collapse",
+    "answer_question": "Why does the GAN generator maximize log D(G(z)) instead of minimizing log(1-D(G(z))) in the original formulation?",
+    "paper_name": "GAN",
+    "paper_title": "Generative Adversarial Networks"
+  },
+  "gan global optimum proof result": {
+    "search_query": "GAN global optimum proof result minimax equilibrium",
+    "retrieval_query": "minimax game Nash equilibrium optimal generator optimal discriminator value function V_G V_D zero-sum game",
+    "answer_question": "What is the proof of the global optimum result in Generative Adversarial Networks?",
+    "paper_name": "GAN",
+    "paper_title": "Generative Adversarial Nets"
+  },
+  "how does vit turn an image into tokens": {
+    "search_query": "Vision Transformer ViT image patch embedding tokenization",
+    "retrieval_query": "ViT patch embedding linear projection positional encoding sequence of patches transformer encoder",
+    "answer_question": "How does the Vision Transformer (ViT) convert an image into a sequence of tokens for processing?",
+    "paper_name": "ViT",
+    "paper_title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale"
+  },
+  "vit position embeddings type": {
+    "search_query": "Vision Transformer ViT position embeddings absolute sinusoidal learnable",
+    "retrieval_query": "ViT position embedding absolute position encoding sinusoidal function learnable parameters patch embedding sequence length",
+    "answer_question": "What type of position embeddings does the Vision Transformer (ViT) use, and how are they implemented?",
+    "paper_name": "ViT",
+    "paper_title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale"
+  },
+  "why does vit need large datasets": {
+    "search_query": "Vision Transformer ViT large datasets data efficiency self-supervised pre-training",
+    "retrieval_query": "Vision Transformer ViT inductive bias convolutional neural network data efficiency pre-training ImageNet-21k self-supervised learning",
+    "answer_question": "Why does the Vision Transformer (ViT) require large datasets for effective training compared to Convolutional Neural Networks?",
+    "paper_name": null,
+    "paper_title": null
+  },
+  "how does self attention compute weights": {
+    "search_query": "self-attention mechanism transformer scaled dot-product",
+    "retrieval_query": "scaled dot-product attention QKV query key value softmax weight matrix",
+    "answer_question": "How does self-attention compute attention weights using queries, keys, and values?",
+    "paper_name": null,
+    "paper_title": null
+  },
+  "how to train sentence embeddings for similarity search": {
+    "search_query": "sentence embeddings similarity search training contrastive learning",
+    "retrieval_query": "contrastive loss triplet loss cosine similarity embedding space semantic similarity hard negative mining",
+    "answer_question": "How are sentence embeddings trained for similarity search tasks, including common architectures and loss functions?",
+    "paper_name": null,
+    "paper_title": null
+  }
+}

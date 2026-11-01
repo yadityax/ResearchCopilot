@@ -112,19 +112,16 @@ class MemoryService:
         """
         try:
             query_emb = await self._embedding_svc.embed_single(topic)
+            # Filter to this session inside the vector search. Filtering afterwards let other
+            # sessions' entries fill the top_k, so a session could end up forgetting nothing.
             chunks = await self._vector_db.query_similar(
                 collection_name=self.settings.chroma_collection_memory,
                 query_embedding=query_emb,
                 top_k=top_k,
+                where={"session_id": session_id},
             )
-            # Only delete entries for this session with high relevance (score > 0.5)
-            ids_to_delete = [
-                c.chunk_id for c in chunks
-                if c.score > 0.5 and
-                   (not hasattr(c, "metadata") or
-                    not c.metadata or
-                    c.metadata.get("session_id", session_id) == session_id)
-            ]
+            # Only delete entries with high relevance (score > 0.5)
+            ids_to_delete = [c.chunk_id for c in chunks if c.score > 0.5]
             if ids_to_delete:
                 col = self._vector_db._get_collection(self.settings.chroma_collection_memory)
                 col.delete(ids=ids_to_delete)
@@ -140,6 +137,7 @@ class MemoryService:
             collection_name=self.settings.chroma_collection_memory,
             query_embedding=query_emb,
             top_k=request.limit * 3,  # fetch extra, re-rank after decay
+            where={"session_id": request.session_id},  # never return another session's turns
         )
         scored = []
         for chunk in chunks:

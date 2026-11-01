@@ -3,6 +3,8 @@ DynamoDB Service — metadata store for papers and user sessions.
 Uses local DynamoDB (Docker) in dev; AWS DynamoDB in production.
 """
 import asyncio
+import difflib
+import re
 import uuid
 from datetime import datetime, timezone
 from typing import List, Optional
@@ -125,25 +127,51 @@ class DynamoDBService:
         response = table.get_item(Key={"paper_id": paper_id})
         return response.get("Item")
 
-    async def scan_papers_by_keyword(self, keyword: str) -> List[dict]:
-        """Scan all papers and return those whose title contains the keyword (case-insensitive)."""
+    async def find_papers(self, paper_name: Optional[str], paper_title: Optional[str] = None) -> List[dict]:
+        """Find stored papers by official title (preferred) or short name such as 'BERT'."""
         loop = asyncio.get_event_loop()
-        return await loop.run_in_executor(None, self._scan_papers_sync, keyword.lower())
+        return await loop.run_in_executor(None, self._find_papers_sync, paper_name, paper_title)
 
-    def _scan_papers_sync(self, keyword_lower: str) -> List[dict]:
+    def _find_papers_sync(self, paper_name: Optional[str], paper_title: Optional[str]) -> List[dict]:
         table = self._get_papers_table()
         try:
-            response = table.scan(ProjectionExpression="paper_id, title")
-            items = response.get("Items", [])
-            matched = [
-                item for item in items
-                if keyword_lower in item.get("title", "").lower()
-            ]
-            logger.debug(f"[DynamoDB] scan_papers_by_keyword '{keyword_lower}' → {len(matched)} matches")
+            items, kwargs = [], {"ProjectionExpression": "paper_id, title"}
+            while True:  # a scan returns at most 1 MB per page
+                response = table.scan(**kwargs)
+                items.extend(response.get("Items", []))
+                if "LastEvaluatedKey" not in response:
+                    break
+                kwargs["ExclusiveStartKey"] = response["LastEvaluatedKey"]
+            matched = self.match_papers(items, paper_name, paper_title)
+            logger.debug(f"[DynamoDB] find_papers name='{paper_name}' title='{paper_title}' → {len(matched)} matches")
             return matched
         except Exception as e:
             logger.warning(f"[DynamoDB] scan failed: {e}")
             return []
+
+    @staticmethod
+    def match_papers(items: List[dict], paper_name: Optional[str], paper_title: Optional[str]) -> List[dict]:
+        """
+        Title match first: short names often don't appear in the title ('DDPM' is 'Denoising Diffusion
+        Probabilistic Models'), and substring matching on a name is ambiguous ('Transformer' hits
+        the BERT and ViT titles but not 'Attention Is All You Need').
+        Falls back to a whole-word match on the name.
+        """
+        def _norm(s: str) -> str:
+            return " ".join(re.sub(r"[^a-z0-9]", " ", s.lower()).split())
+
+        if paper_title:
+            target = _norm(paper_title)
+            by_title = [
+                it for it in items
+                if difflib.SequenceMatcher(None, target, _norm(it.get("title", ""))).ratio() >= 0.85
+            ]
+            if by_title:
+                return by_title
+        if paper_name:
+            pattern = re.compile(rf"\b{re.escape(paper_name.lower())}\b")
+            return [it for it in items if pattern.search(it.get("title", "").lower())]
+        return []
 
     # ── Sessions / Memory ──────────────────────────────────────────────────
 
@@ -154,21 +182,29 @@ class DynamoDBService:
         content: str,
         metadata: dict,
     ) -> str:
-        entry_id = str(uuid.uuid4())
+        timestamp = datetime.now(timezone.utc).isoformat()
+        entry_id = self.make_entry_id(timestamp)
         loop = asyncio.get_event_loop()
         await loop.run_in_executor(
-            None, self._put_entry_sync, session_id, entry_id, role, content, metadata
+            None, self._put_entry_sync, session_id, entry_id, timestamp, role, content, metadata
         )
         return entry_id
 
-    def _put_entry_sync(self, session_id, entry_id, role, content, metadata):
+    @staticmethod
+    def make_entry_id(timestamp: str) -> str:
+        # entry_id is the sort key: prefixing the ISO timestamp makes DynamoDB order entries
+        # by time, so ScanIndexForward=False really returns the newest turns. The suffix keeps
+        # two writes in the same microsecond (user + assistant turn) unique.
+        return f"{timestamp}#{uuid.uuid4().hex[:8]}"
+
+    def _put_entry_sync(self, session_id, entry_id, timestamp, role, content, metadata):
         table = self._get_sessions_table()
         table.put_item(Item={
             "session_id": session_id,
             "entry_id": entry_id,
             "role": role,
             "content": content,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": timestamp,
             "metadata": metadata,
         })
 

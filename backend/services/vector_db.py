@@ -41,7 +41,10 @@ class VectorDBService:
         client = self._get_client()
         return client.get_or_create_collection(
             name=name,
-            metadata={"hnsw:space": "cosine"},
+            # search_ef: HNSW candidate list size at query time. Chroma's default (10) returned only
+            # ~92% of the true top-10 on the eval corpus, varying between index builds; 100 matched
+            # exact search. Applied when a collection is created.
+            metadata={"hnsw:space": "cosine", "hnsw:search_ef": 100},
         )
 
     # ── Store ──────────────────────────────────────────────────────────────
@@ -87,10 +90,11 @@ class VectorDBService:
         query_embedding: List[float],
         top_k: int = 5,
         filter_paper_ids: Optional[List[str]] = None,
+        where: Optional[dict] = None,
     ) -> List[RetrievedChunk]:
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
-            None, self._query_sync, collection_name, query_embedding, top_k, filter_paper_ids
+            None, self._query_sync, collection_name, query_embedding, top_k, filter_paper_ids, where
         )
 
     def _query_sync(
@@ -99,12 +103,21 @@ class VectorDBService:
         query_embedding: List[float],
         top_k: int,
         filter_paper_ids: Optional[List[str]],
+        where: Optional[dict] = None,
     ) -> List[RetrievedChunk]:
         collection = self._get_collection(collection_name)
 
-        where = None
+        # Combine the paper filter with any extra metadata filter (e.g. session_id for memory)
+        clauses = []
         if filter_paper_ids:
-            where = {"paper_id": {"$in": filter_paper_ids}}
+            clauses.append({"paper_id": {"$in": filter_paper_ids}})
+        if where:
+            clauses.append(where)
+        where = None
+        if len(clauses) == 1:
+            where = clauses[0]
+        elif clauses:
+            where = {"$and": clauses}
 
         count = collection.count()
         if count == 0:

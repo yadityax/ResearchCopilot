@@ -1,8 +1,12 @@
 """
 Embedding Service
-Uses pretrained sentence-transformers/all-MiniLM-L6-v2 (384-dim).
-Passes embeddings through a lightweight MLP projection (Encoder MLP + Sinusoidal MLP)
-as described in the ResearchCopilot architecture.
+Uses pretrained sentence-transformers/all-MiniLM-L6-v2 (384-dim, L2-normalised).
+
+The EncoderMLP / SinusoidalMLP projection (backend/models/mlp_models.py) is intentionally NOT
+applied. Untrained, those layers were re-initialised randomly in every process, so each pod and
+each restart embedded the same text into a different space (cosine ~0.5 between two processes),
+and on the eval set they lowered Recall@5 on average (see eval/results/report.md). They stay in
+the codebase as a hook for contrastive fine-tuning with saved, versioned weights.
 """
 import asyncio
 import time
@@ -14,7 +18,6 @@ from loguru import logger
 
 from backend.config import Settings
 from backend.models.schemas import EmbeddingQueryRequest, EmbeddingQueryResponse, RetrievedChunk
-from backend.models.mlp_models import EncoderMLP, SinusoidalMLP
 from backend.services.mlflow_service import MLflowService
 
 
@@ -23,8 +26,6 @@ class EmbeddingService:
     def __init__(self, settings: Settings):
         self.settings = settings
         self._model: SentenceTransformer | None = None
-        self._encoder_mlp: EncoderMLP | None = None
-        self._sinusoidal_mlp: SinusoidalMLP | None = None
         self._device = "cuda" if torch.cuda.is_available() else "cpu"
         self._mlflow = MLflowService(settings.mlflow_tracking_uri, settings.mlflow_experiment_name)
 
@@ -38,17 +39,12 @@ class EmbeddingService:
                 device=self._device,
                 token=False,   # don't use cached/expired HF token; model is public
             )
-            dim = self.settings.embedding_dim
-            self._encoder_mlp = EncoderMLP(input_dim=dim, hidden_dim=dim, output_dim=dim).to(self._device)
-            self._sinusoidal_mlp = SinusoidalMLP(dim=dim).to(self._device)
-            self._encoder_mlp.eval()
-            self._sinusoidal_mlp.eval()
-            logger.info(f"[EmbeddingService] Models loaded on {self._device}")
+            logger.info(f"[EmbeddingService] Model loaded on {self._device}")
 
     # ── Public ─────────────────────────────────────────────────────────────
 
     async def embed_batch(self, texts: List[str]) -> List[List[float]]:
-        """Embed a list of texts → 384-dim projected vectors."""
+        """Embed a list of texts → 384-dim normalised vectors."""
         loop = asyncio.get_event_loop()
         t0 = time.perf_counter()
         result = await loop.run_in_executor(None, self._embed_sync, texts)
@@ -82,9 +78,8 @@ class EmbeddingService:
     def _embed_sync(self, texts: List[str]) -> List[List[float]]:
         self._load_models()
 
-        # Stage 1: pretrained sentence-transformers (384-dim)
         with torch.no_grad():
-            raw = self._model.encode(
+            embeddings = self._model.encode(
                 texts,
                 batch_size=32,
                 show_progress_bar=False,
@@ -93,13 +88,4 @@ class EmbeddingService:
                 normalize_embeddings=True,
             )  # shape: (N, 384)
 
-            # Stage 2: Encoder MLP projection
-            projected = self._encoder_mlp(raw)  # (N, 384)
-
-            # Stage 3: Sinusoidal MLP
-            final = self._sinusoidal_mlp(projected)  # (N, 384)
-
-            # L2 normalize final embeddings
-            final = torch.nn.functional.normalize(final, p=2, dim=1)
-
-        return final.cpu().numpy().tolist()
+        return embeddings.cpu().numpy().tolist()
