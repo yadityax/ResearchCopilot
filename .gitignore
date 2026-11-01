@@ -16,3 +16,6 @@ chroma_data/
 .pytest_cache/
 .mypy_cache/
 .claude/
+
+# Eval corpus (downloaded from arXiv by eval/run_eval.py)
+eval/data/
